@@ -81,15 +81,15 @@ window.addEventListener('DOMContentLoaded', async function() {
                
       // create a for loop for the forecast data
       for(let i=0; i < forecast.forecastday.length;i++){
-        let forecastDay = forecast.forecastDay[i]
+        let forecastday = forecast.forecastday[i]
         
         // fill forecast element with # of days and forecast element with weather icon, date, hi/lo temps, and forecast weather conditions from for loop
         forecastElement.insertAdjacentHTML(`beforeend`,`
         <div class="text-center">
-          <img src="https:${forecastDay.day.condition.icon}" class="mx-auto">
-          <h1 class="text-2xl text-bold text-gray-500">${foreCastDay.date}</h1>
-          <h2 class="text-xl">High ${forecastDay.day.maxtemp_f}° - Low ${forecastDay.day.mintemp_f}°</h2>
-          <p class="text-gray-500">${forecastDay.day.condition.text}</h1>
+          <img src="https:${forecastday.day.condition.icon}" class="mx-auto">
+          <h1 class="text-2xl text-bold text-gray-500">${forecastday.date}</h1>
+          <h2 class="text-xl">High ${forecastday.day.maxtemp_f}° - Low ${forecastday.day.mintemp_f}°</h2>
+          <p class="text-gray-500">${forecastday.day.condition.text}</h1>
         </div>
         `
       )
