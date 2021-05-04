@@ -25,16 +25,18 @@ window.addEventListener('DOMContentLoaded', async function() {
 
     // - Get a reference to the element containing the user-entered location
     let locationInput = document.querySelector(`#location`)
+    // - Get the user-entered location & days from the element's value
+    let location = locationInput.value
 
     // - Get a reference to the element containing the user-entered days
     let daysInput = document.querySelector(`#days`)
-
-    // - Get the user-entered location & days from the element's value
-    let location = locationInput.value
+    // - Get the user-entered days from the element's value
     let days = daysInput.value
     
     // - Check to see if the user entered anything; if so:
     if (location.length > 0) {
+      document.querySelector(`.forecast`).innerHTML = ``
+
       // - Construct a URL to call the WeatherAPI.com API
       let url = `https://api.weatherapi.com/v1/forecast.json?key=2abe2cfd2fdd4a3cb54161422212704&q=${location}&days=${days}`
 
@@ -49,8 +51,8 @@ window.addEventListener('DOMContentLoaded', async function() {
 
       // - Store the returned location, current weather conditions, the forecast as three separate variables
       let interpretedLocation = json.location
-      let currentWeather = json.current
-      let dailyForecast = json.forecast
+      let current = json.current
+      let forecast = json.forecast
 
       // Store a reference to the "current" element
       let currentElement = document.querySelector(`.current`)
@@ -60,10 +62,10 @@ window.addEventListener('DOMContentLoaded', async function() {
         <div class="text-center space-y-2">
           <div class="font-bold text-3xl">Current Weather for ${interpretedLocation.name}, ${interpretedLocation.region}</div>
           <div class="font-bold">
-            <img src="https:${currentWeather.condition.icon}" class="inline-block">
-            <span class="temperature"> ${currentWeather.temp_f}</span>° 
+            <img src="https:${current.condition.icon}" class="inline-block">
+            <span class="temperature"> ${current.temp_f}</span>° 
             and
-            <span class="conditions"> ${currentWeather.condition.text}</span>
+            <span class="conditions"> ${current.condition.text}</span>
           </div>
         </div>
       `
@@ -75,19 +77,21 @@ window.addEventListener('DOMContentLoaded', async function() {
       <div class="font-bold text-3xl">${days} Day Forecast</div>
       </div>
       `
+          
                
       // create a for loop for the forecast data
-      for(let i=0; i < dailyForecast.forecastDay.length; i++) {
-        let forecastDay = dailyForecast.forecastDay[i]
+      for(let i=0; i < forecast.forecastday.length;i++){
+        let forecastDay = forecast.forecastDay[i]
         
         // fill forecast element with # of days and forecast element with weather icon, date, hi/lo temps, and forecast weather conditions from for loop
         forecastElement.insertAdjacentHTML(`beforeend`,`
         <div class="text-center">
           <img src="https:${forecastDay.day.condition.icon}" class="mx-auto">
           <h1 class="text-2xl text-bold text-gray-500">${foreCastDay.date}</h1>
-          <h2 class="text-xl">High ${foreCastDay.day.maxtemp_f}</span>° - Low ${forecastDay.day.mintemp_f}</span>°</h2>
+          <h2 class="text-xl">High ${forecastDay.day.maxtemp_f}° - Low ${forecastDay.day.mintemp_f}°</h2>
           <p class="text-gray-500">${forecastDay.day.condition.text}</h1>
-        </div>`
+        </div>
+        `
       )
       }
 
